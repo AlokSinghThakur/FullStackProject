@@ -1,22 +1,20 @@
-const mongoose = require('mongoose')
 
-require('dotenv').config()
+require("dotenv").config()
+const { default: mongoose } = require("mongoose")
+const MongoClient = require('mongoose')
+const uri = `mongodb+srv://Ruhi:${process.env.DB_PASSWORD}@cluster0.fmgaspp.mongodb.net/db1`
+// const uri = process.env.DB_URI
 
-const start = () => {
+const start = ()=>{
+    // mongoose.set('strictQuery',false);
+    mongoose.connect(uri)
+    mongoose.connection.on("error",()=>{
+        console.log("error connecting db")
+    })
 
-    mongoose.connect(process.env.DBURI)
-    mongoose.connection.on(
-        "error",()=>{
-            console.log("error")
-        }
-    )
-    mongoose.connection.once(
-        "Connection_OK",()=>{
-            console.log('DB Connected')
-        }
-    )
-} 
-
-module.exports= {
-    start
+    mongoose.connection.once("db_connect",()=>{
+        console.log("Database connected")
+    })
 }
+
+module.exports= {start}
