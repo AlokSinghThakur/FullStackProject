@@ -1,0 +1,29 @@
+.top{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    justify-content: space-between;
+    
+    background-color: aqua;
+    padding: 10px;
+    border-radius: 20px;
+
+}
+.left{
+    text-align: left;
+    background-color: blueviolet;
+    padding: 10px;
+    border-radius: 10px;
+
+}
+.right{
+   margin-right: 10px;
+   justify-content: space-around;
+   margin: 10px;
+}
+.a{
+    margin: 10px;
+    background-color: blueviolet;
+    padding: 10px;
+    border-radius: 10px;
+}
