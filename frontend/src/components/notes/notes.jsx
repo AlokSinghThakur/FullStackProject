@@ -1,8 +1,9 @@
+import './note.css';
 export default function Note(props){
 
     return (
-        <div>
-        <textarea> Add Note</textarea>
+        <div className="notes">
+        <textarea> <title>"Addnotes</title></textarea>
         </div>
     )
 }

@@ -4,10 +4,13 @@ const fs = require("fs"); //file system
 const bodyParser = require("body-parser");
 const async = require("async");
 const jwt = require("jsonwebtoken");
+const verify = require("./services/authServices");
+const cookiesParser = require("cookie-parser");
+
 
 require("dotenv").config();
 
-const MongoDB = require("./mongo");
+const MongoDB = require("./services/databaseServices");
 const { mongo } = require("mongoose");
 const notemodel = require("./notemodel");
 const usermodel = require("./user_model");
@@ -20,6 +23,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookiesParser());
 
 MongoDB.start(); //db has been started
 
@@ -29,7 +33,7 @@ app.get("/notes", (req, res) => {
   });
 });
 
-app.get("/newnotes", (req, res) => {
+app.get("/newnotes",verify, (req, res) => {
   async.auto(
     {
       notes: function (cb) {
@@ -298,7 +302,15 @@ app.post('/login', (req, res) => {
           }
   
           console.log(user)
-          return cb(null, user);
+          try {
+            var token = jwt.sign(
+              { email: user.email, password: user.password },
+              secretKey
+            );
+            return cb(null, token);
+          } catch (err) {
+            return cb(null, false);
+          }
         }
         
         );
@@ -308,32 +320,28 @@ app.post('/login', (req, res) => {
       if (err) {
         return res.status(403).json({ error: err });
       }
-      return res.json({ results: results.users });
+      console.log(results);
 
+      if (!results.users) {
+        return res.json({ results: "unable to login" });
+      }
+      res
+        .cookie("authToken", results.users, {
+          httpOnly: true,
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+        })
+        .send(" succesfully logged in");
     }
   );
 });
 
 
-app.get('/login',(req,res) =>{
-  async.auto(
-    {
-      users:function(cb){
-        usermodel.deleteOne({email:res.body.email,password:res.body.password},(err,user) => {
-          if(err){
-            return cb("Unable to logout");
-          }
-          return cb(null,user);
-        })
-      }
-    },function(err,results){
-      if(err){
-        return res.status(403).json({error:err});
-      }
-      return res.json({results:results.users})
-
-    }
-  )
+app.get('/logout',(req,res) =>{
+ res.cookie("authToken",null,{
+  httpOnly:true,
+  expires:new Date(Date.now())
+ })
+ .send("Successfully logout");
 })
 
 
