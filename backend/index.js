@@ -6,6 +6,7 @@ const async = require("async");
 const jwt = require("jsonwebtoken");
 const verify = require("./services/authServices");
 const cookiesParser = require("cookie-parser");
+const cors = require("cors");
 
 
 require("dotenv").config();
@@ -24,6 +25,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookiesParser());
+app.use(cors());
 
 MongoDB.start(); //db has been started
 
@@ -33,7 +35,7 @@ app.get("/notes", (req, res) => {
   });
 });
 
-app.get("/newnotes",verify, (req, res) => {
+app.get("/newnotes", (req, res) => {
   async.auto(
     {
       notes: function (cb) {

@@ -3,7 +3,8 @@ export default function Note(props){
 
     return (
         <div className="notes">
-        <textarea> <title>"Addnotes</title></textarea>
+        <h3>{props.title}</h3>
+        <p>{props.desc}</p>
         </div>
     )
 }
