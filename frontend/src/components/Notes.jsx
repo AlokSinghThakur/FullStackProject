@@ -1,5 +1,5 @@
-import './note.css';
-export default function Note(props){
+import './Notes.css';
+export default function Notes(props){
 
     return (
         <div className="notes">

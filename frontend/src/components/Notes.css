@@ -1,0 +1,12 @@
+
+.notes {
+  display: inline-block;
+  height: 70px;
+  width: 170px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  color: #005;
+  background-color: aquamarine;
+  margin: 10px;
+}

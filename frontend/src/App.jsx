@@ -1,47 +1,26 @@
-// import './App.css';
-import Navbar from './components/navbar/navbar';
-import Note from './components/notes/notes';
-import axios from 'axios';
-import { useEffect, useState } from "react";
+import LoginPage from './components/loginPage';
+import SignupPage from './components/signupPage';
+import Home from './components/Home';
+// import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
 
 function App() {
-  const [showModal, setShowModal] = useState(false);
-  const [notes, setNotes] = useState([]);
 
-  function getAllNotes() {
-    axios.get('http://localhost:5000/newnotes').then(
-      (response) => {
-        setNotes(response.data.results);
-      }
-    )
-  }
-
-  useEffect(() => {
-    getAllNotes();
-  }, []);
-
-  function saveNote() {
-    axios.post("http://localhost:5000/newnotes", {
-      desc: "New Post call ",
-      title: "UI Post call"
-    }).then((response) => {
-      setNotes(response.data.results);
-    });
-
-  }
-
-  return (
-    <div className="App">
-      <Navbar></Navbar>
-      <div id="app">
-        {
-          notes.map((item) => {
-            return <Note title={item.title} desc={item.desc} />
-          })
-        }
-        <button className='addNote' type='button' onClick={saveNote}>+</button>
-      </div>
-    </div>
+   return (
+    
+      <BrowserRouter>
+      <Routes>
+        <Route path="/">
+          <Route index element={<Home />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignupPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    
+    
   );
 }
 
