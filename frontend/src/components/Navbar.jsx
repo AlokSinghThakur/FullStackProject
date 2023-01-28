@@ -1,17 +1,18 @@
 import axios from "axios";
 import React from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
     const navigate = useNavigate();
     function logout(e){
         e.preventDefault();
-        axios.get("http://localhost:5000/logout",).then(
-            (response)=>{if(response.status==200){
+        axios.get("http://localhost:5000/logout",{ withCredentials: true }).then(
+            (response)=>{if(response.status===200){
+                 document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 navigate("/login")
                 console.log('login')
-            }}
+                }}
         ).catch((err)=>{
             alert("try again")
         })
