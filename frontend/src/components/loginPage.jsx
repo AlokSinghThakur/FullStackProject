@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './Api';
 import './loginPage.css';
 import React from 'react';
 import { useState } from 'react';
@@ -12,7 +12,7 @@ function LoginPage() {
 
   function login(e) {
     e.preventDefault();
-    axios.post("http://localhost:5000/api/v1/login", {
+    axios.post("/api/v1/login", {
       email: email, password: password,
     }, { withCredentials: true }).then(
       (response) => {

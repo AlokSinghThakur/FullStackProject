@@ -1,6 +1,6 @@
 import React,{ useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from './Api';
 
 function SignupPage() {
   
@@ -15,7 +15,7 @@ function SignupPage() {
       alert("password not match")
       return;
     }
-    axios.post("http://localhost:5000/api/v1/signup",{
+    axios.post("/api/v1/signup",{
       email:email,password:password,
     }).then(
       (response) => {

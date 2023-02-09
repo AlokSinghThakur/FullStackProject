@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Note from './Notes';
-import axios from './api';
+import axios from './Api';
 import { useEffect, useState } from "react";
 import './Home.css'
 
@@ -14,7 +14,7 @@ function App() {
 
 
   function getAllNotes() {
-    axios.get('http://localhost:5050/api/v1/newNotes',{withCredentials:true}).then(
+    axios.get('/api/v1/newNotes',{withCredentials:true}).then(
       (response) => {
         setNotes(response.data.results);
       }
@@ -32,7 +32,7 @@ function App() {
 
 
   function saveNote() {
-    axios.post('http://localhost:5050/api/v1/addnewnotes', {
+    axios.post('/api/v1/addnewnotes', {
       desc: desc, title: title
     },{withCredentials:true})
       .then((response) => {
