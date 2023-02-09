@@ -12,7 +12,7 @@ function LoginPage() {
 
   function login(e) {
     e.preventDefault();
-    axios.post("http://localhost:5000/login", {
+    axios.post("http://localhost:5000/api/v1/login", {
       email: email, password: password,
     }, { withCredentials: true }).then(
       (response) => {

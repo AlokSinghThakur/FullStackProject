@@ -1,6 +1,9 @@
-const mongoose = require('mongoose')
+const  mongoose = require('mongoose')
+// const MongoClient = require('mongoose')
+require("dotenv").config();
 
-let URL = 'mongodb://localhost:27017/projects'
+let URL = process.env.DBURI
+
 const start = ()=>{
     mongoose.connect(URL)
     mongoose.connection.on(

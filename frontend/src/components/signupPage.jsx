@@ -11,11 +11,11 @@ function SignupPage() {
 
   function signup(e){
     e.preventDefault();
-    if(confirmPassword!=password){
+    if(confirmPassword!==password){
       alert("password not match")
       return;
     }
-    axios.post("http://localhost:5000/signup",{
+    axios.post("http://localhost:5000/api/v1/signup",{
       email:email,password:password,
     }).then(
       (response) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Note from './Notes';
-import axios from 'axios';
+import axios from './api';
 import { useEffect, useState } from "react";
 import './Home.css'
 
@@ -11,12 +11,10 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
-  // const [isLogged, setIsLogged] = useState(localStorage.getItem("isLogged"));
-
 
 
   function getAllNotes() {
-    axios.get('http://localhost:5000/newNotes',{withCredentials:true}).then(
+    axios.get('http://localhost:5000/api/v1/newNotes',{withCredentials:true}).then(
       (response) => {
         setNotes(response.data.results);
       }
@@ -34,7 +32,7 @@ function App() {
 
 
   function saveNote() {
-    axios.post('http://localhost:5000/addnewnotes', {
+    axios.post('http://localhost:5000/api/v1/addnewnotes', {
       desc: desc, title: title
     },{withCredentials:true})
       .then((response) => {

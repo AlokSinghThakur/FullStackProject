@@ -7,7 +7,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     function logout(e){
         e.preventDefault();
-        axios.get("http://localhost:5000/logout",{ withCredentials: true }).then(
+        axios.get("http://localhost:5000/api/v1/logout",{ withCredentials: true }).then(
             (response)=>{if(response.status===200){
                  document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 navigate("/login")

@@ -9,7 +9,7 @@ const cookiesParser = require("cookie-parser");
 const cors = require("cors");
 
 const corsOptions ={
-  origin: 'http://localhost:3000',
+  origin: true,
   credentials: true,
   optionSuccessStatus: 200
 }
@@ -38,7 +38,7 @@ MongoDB.start(); //db has been started
 
 
 //Users
-app.get("/getUsers", (req, res) => {
+app.get("/api/v1/getUsers", (req, res) => {
   async.auto(
     {
       notes: function (cb) {
@@ -60,7 +60,7 @@ app.get("/getUsers", (req, res) => {
   );
 });
 
-app.post("/addNewUser", async (req, res) => {
+app.post("/api/v1/addNewUser", async (req, res) => {
   const data = new usermodel({
     user: req.body.user,
     password: req.body.password,
@@ -72,7 +72,7 @@ app.post("/addNewUser", async (req, res) => {
 })
 
 //Notes combine Users
-app.get("/getNotesUsers", (req, res) => {
+app.get("/api/v1/getNotesUsers", (req, res) => {
   async.auto(
     {
       notes: function (cb) {
@@ -113,7 +113,7 @@ app.get("/getNotesUsers", (req, res) => {
 })
 
 //db
-app.post("/addnewnoteFromDb", (req, res) => {
+app.post("/api/v1/addnewnoteFromDb", (req, res) => {
   let Existingnotes = db.notes;
   let note = req.body.note;
 
@@ -124,7 +124,7 @@ app.post("/addnewnoteFromDb", (req, res) => {
 });
 
 
-app.post("/addnewnotes", async (req, res) => {
+app.post("/api/v1/addnewnotes", async (req, res) => {
   const data = new notemodel({
     desc: req.body.desc,
     title: req.body.title,
@@ -137,7 +137,7 @@ app.post("/addnewnotes", async (req, res) => {
 
 
 //Users
-app.post('/submission', function (req, res) {
+app.post('/api/v1/submission', function (req, res) {
   var key = req.body.key;
   var first = parseInt(req.body.firstNumber);
   var second = parseInt(req.body.lastNumber);
@@ -218,14 +218,13 @@ app.post('/submission', function (req, res) {
 });
 
 //
-app.get('/newNotes', verify,(req, res) => {
+app.get('/api/v1/newNotes',(req, res) => {
   async.auto(
     {
       notes: function (cb) {
         notemodel.find().exec(function (err, note) {
           if (err) {
-
-            return cb("Unable to fetch notes.");
+            return cb(err);
           }
           return cb(null, note);
         });
@@ -241,7 +240,7 @@ app.get('/newNotes', verify,(req, res) => {
   );
 });
 
-app.post('/signup', (req, res) => {
+app.post('/api/v1/signup', (req, res) => {
   async.auto(
   
     {
@@ -269,7 +268,7 @@ app.post('/signup', (req, res) => {
 });
 
 
-app.post('/login', (req, res) => {
+app.post('/api/v1/login', (req, res) => {
   async.auto(
     {
       users: function (cb) {
@@ -315,7 +314,7 @@ app.post('/login', (req, res) => {
 });
 
 
-app.get('/logout',(req,res) =>{
+app.get('/api/v1/logout',(req,res) =>{
  res.cookie("authToken","",{
   httpOnly:true
  })
