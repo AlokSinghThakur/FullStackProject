@@ -14,7 +14,7 @@ function App() {
 
 
   function getAllNotes() {
-    axios.get('http://localhost:5000/api/v1/newNotes',{withCredentials:true}).then(
+    axios.get('http://localhost:5050/api/v1/newNotes',{withCredentials:true}).then(
       (response) => {
         setNotes(response.data.results);
       }
@@ -32,7 +32,7 @@ function App() {
 
 
   function saveNote() {
-    axios.post('http://localhost:5000/api/v1/addnewnotes', {
+    axios.post('http://localhost:5050/api/v1/addnewnotes', {
       desc: desc, title: title
     },{withCredentials:true})
       .then((response) => {
