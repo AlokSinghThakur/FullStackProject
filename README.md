@@ -13,7 +13,7 @@ To be able to run this app you need NODEJS and MONGODB installed on your system.
 
 # Running the Notes React App
 1.Move into the note-maker folder and run cmd npm install.<br>
-2.Once installation is completed<br><br>
+2.Once installation is completed<br>
 3.For dev environment run npm start<br>
 4.Then run npm run-script build it will create a production build for the application.<br>
 5.Then to deploy it in static local server you need to install serve npm i -g serve.<br>
